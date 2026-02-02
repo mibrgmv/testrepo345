@@ -4,7 +4,7 @@ import (
     "fmt"
 )
 
-func quickSort(arr []int) []int {
+func QuickSort(arr []int) []int {
     if len(arr) <= 1 {
         return arr
     }
@@ -19,8 +19,8 @@ func quickSort(arr []int) []int {
             right = append(right, x)
         }
     }
-    left = quickSort(left)
-    right = quickSort(right)
+    left = QuickSort(left)
+    right = QuickSort(right)
     var result []int
     result = append(result, left...)
     result = append(result, middle...)
