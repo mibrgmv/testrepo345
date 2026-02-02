@@ -7,33 +7,27 @@ namespace TrigonometricCalculator
         static void Main(string[] args)
         {
             Console.WriteLine("Trigonometric Calculator");
-            Console.WriteLine("------------------------");
             Console.WriteLine("1. Calculate in degrees");
             Console.WriteLine("2. Calculate in radians");
             Console.WriteLine("3. Exit");
             Console.Write("Choose an option: ");
             string option = Console.ReadLine();
 
-            while (option != "3")
+            switch (option)
             {
-                switch (option)
-                {
-                    case "1":
-                        CalculateInDegrees();
-                        break;
-                    case "2":
-                        CalculateInRadians();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Please choose a valid option.");
-                        break;
-                }
-
-                Console.WriteLine("1. Calculate in degrees");
-                Console.WriteLine("2. Calculate in radians");
-                Console.WriteLine("3. Exit");
-                Console.Write("Choose an option: ");
-                option = Console.ReadLine();
+                case "1":
+                    CalculateInDegrees();
+                    break;
+                case "2":
+                    CalculateInRadians();
+                    break;
+                case "3":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Please choose a valid option.");
+                    Main(args);
+                    break;
             }
         }
 
@@ -41,7 +35,6 @@ namespace TrigonometricCalculator
         {
             Console.Write("Enter angle in degrees: ");
             string angleInput = Console.ReadLine();
-
             if (double.TryParse(angleInput, out double angleInDegrees))
             {
                 double angleInRadians = angleInDegrees * Math.PI / 180;
@@ -50,6 +43,7 @@ namespace TrigonometricCalculator
             else
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
+                CalculateInDegrees();
             }
         }
 
@@ -57,7 +51,6 @@ namespace TrigonometricCalculator
         {
             Console.Write("Enter angle in radians: ");
             string angleInput = Console.ReadLine();
-
             if (double.TryParse(angleInput, out double angleInRadians))
             {
                 CalculateTrigonometricFunctions(angleInRadians);
@@ -65,6 +58,7 @@ namespace TrigonometricCalculator
             else
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
+                CalculateInRadians();
             }
         }
 
@@ -72,19 +66,23 @@ namespace TrigonometricCalculator
         {
             try
             {
-                double sin = Math.Sin(angleInRadians);
-                double cos = Math.Cos(angleInRadians);
-                double tg = Math.Tan(angleInRadians);
-                double ctg = 1 / tg;
+                double sine = Math.Sin(angleInRadians);
+                double cosine = Math.Cos(angleInRadians);
+                double tangent = Math.Tan(angleInRadians);
+                double cotangent = 1 / tangent;
 
-                Console.WriteLine($"Sin: {sin}");
-                Console.WriteLine($"Cos: {cos}");
-                Console.WriteLine($"Tg: {tg}");
-                Console.WriteLine($"Ctg: {ctg}");
+                Console.WriteLine($"Sine: {sine}");
+                Console.WriteLine($"Cosine: {cosine}");
+                Console.WriteLine($"Tangent: {tangent}");
+                Console.WriteLine($"Cotangent: {cotangent}");
             }
             catch (DivideByZeroException)
             {
-                Console.WriteLine("Cannot calculate Ctg for this angle.");
+                Console.WriteLine("Cannot calculate cotangent. Tangent is zero.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
     }
