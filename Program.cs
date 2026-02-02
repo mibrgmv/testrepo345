@@ -7,61 +7,62 @@ namespace TrigonometricCalculator
         static void Main(string[] args)
         {
             Console.WriteLine("Trigonometric Calculator");
-            Console.WriteLine("1. Calculate sin, cos, tg, ctg in degrees");
-            Console.WriteLine("2. Calculate sin, cos, tg, ctg in radians");
-            Console.Write("Enter your choice (1/2): ");
-            string choice = Console.ReadLine();
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("1. Calculate in degrees");
+            Console.WriteLine("2. Calculate in radians");
+            Console.Write("Choose an option: ");
+            string option = Console.ReadLine();
             
-            if (choice == "1")
+            if (option == "1")
             {
                 Console.Write("Enter angle in degrees: ");
-                string angleDegrees = Console.ReadLine();
-                if (double.TryParse(angleDegrees, out double angleDeg)
+                string angleInDegrees = Console.ReadLine();
+                if (double.TryParse(angleInDegrees, out double degrees))
                 {
-                    double angleRad = angleDeg * Math.PI / 180;
-                    CalculateTrigonometricFunctions(angleRad);
+                    double radians = degrees * Math.PI / 180;
+                    CalculateTrigonometricFunctions(radians);
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid angle.");
+                    Console.WriteLine("Invalid input. Please enter a numeric value.");
                 }
             }
-            else if (choice == "2")
+            else if (option == "2")
             {
                 Console.Write("Enter angle in radians: ");
-                string angleRadians = Console.ReadLine();
-                if (double.TryParse(angleRadians, out double angleRad)
+                string angleInRadians = Console.ReadLine();
+                if (double.TryParse(angleInRadians, out double radians))
                 {
-                    CalculateTrigonometricFunctions(angleRad);
+                    CalculateTrigonometricFunctions(radians);
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid angle.");
+                    Console.WriteLine("Invalid input. Please enter a numeric value.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                Console.WriteLine("Invalid option. Please choose a valid option.");
             }
         }
         
-        static void CalculateTrigonometricFunctions(double angle)
+        static void CalculateTrigonometricFunctions(double angleInRadians)
         {
             try
             {
-                double sin = Math.Sin(angle);
-                double cos = Math.Cos(angle);
-                double tg = Math.Tan(angle);
-                double ctg = 1 / tg;
+                double sine = Math.Sin(angleInRadians);
+                double cosine = Math.Cos(angleInRadians);
+                double tangent = Math.Tan(angleInRadians);
+                double cotangent = 1 / tangent;
                 
-                Console.WriteLine("sin: " + sin);
-                Console.WriteLine("cos: " + cos);
-                Console.WriteLine("tg: " + tg);
-                Console.WriteLine("ctg: " + ctg);
+                Console.WriteLine("Sine: " + sine);
+                Console.WriteLine("Cosine: " + cosine);
+                Console.WriteLine("Tangent: " + tangent);
+                Console.WriteLine("Cotangent: " + cotangent);
             }
             catch (DivideByZeroException)
             {
-                Console.WriteLine("Error: Cannot calculate ctg because tg is zero.");
+                Console.WriteLine("Cannot calculate cotangent. Tangent is zero.");
             }
         }
     }
