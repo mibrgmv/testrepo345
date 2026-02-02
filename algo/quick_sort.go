@@ -1,7 +1,8 @@
-package algo
+// Go implementation of quick sort
+package main
 
 import (
-    "reflect"
+    "fmt"
     "testing"
 )
 
@@ -10,9 +11,7 @@ func quickSort(arr []int) []int {
         return arr
     }
     pivot := arr[len(arr)/2]
-    left := make([]int, 0)
-    middle := make([]int, 0)
-    right := make([]int, 0)
+    var left, middle, right []int
     for _, x := range arr {
         if x < pivot {
             left = append(left, x)
@@ -22,7 +21,9 @@ func quickSort(arr []int) []int {
             right = append(right, x)
         }
     }
-    return append(append(quickSort(left), middle...), quickSort(right)...
+    left = quickSort(left)
+    right = quickSort(right)
+    return append(append(left, middle...), right...)
 }
 
 func TestQuickSort(t *testing.T) {
@@ -31,19 +32,31 @@ func TestQuickSort(t *testing.T) {
         expected []int
     }{
         {[]int{3, 6, 8, 10, 1, 2, 1}, []int{1, 1, 2, 3, 6, 8, 10}},
-        {[]int{5, 2, 9, 1, 7, 3}, []int{1, 2, 3, 5, 7, 9}},
-        {[]int{1, 1, 1, 1, 1}, []int{1, 1, 1, 1, 1}},
+        {[]int{5, 2, 9, 1, 7}, []int{1, 2, 5, 7, 9}},
+        {[]int{1, 1, 1, 1}, []int{1, 1, 1, 1}},
         {[]int{}, []int{}},
         {[]int{1}, []int{1}},
         {[]int{1, 2}, []int{1, 2}},
         {[]int{2, 1}, []int{1, 2}},
         {[]int{5, 4, 3, 2, 1}, []int{1, 2, 3, 4, 5}},
-        {[]int{1, 1, 1, 2, 2, 2}, []int{1, 1, 1, 2, 2, 2}},
-        {[]int{1, 2, 3, 4, 5}, []int{1, 2, 3, 4, 5}}
+        {[]int{1, 2, 3, 4, 5}, []int{1, 2, 3, 4, 5}},
+        {[]int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}}
     }
     for _, tc := range testCases {
-        if !reflect.DeepEqual(quickSort(tc.arr), tc.expected) {
-            t.Errorf("quickSort(%v) = %v, want %v", tc.arr, quickSort(tc.arr), tc.expected)
+        if got := quickSort(tc.arr); !equal(got, tc.expected) {
+            t.Errorf("quickSort(%v) = %v, want %v", tc.arr, got, tc.expected)
         }
     }
+}
+
+func equal(a, b []int) bool {
+    if len(a) != len(b) {
+        return false
+    }
+    for i := range a {
+        if a[i] != b[i] {
+            return false
+        }
+    }
+    return true
 }
