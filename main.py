@@ -1,5 +1,5 @@
 def main():
-    """Entry point for the hello script."""
+    """Entry point for the application."""
     print("Hello from megaschool")
 
 
